@@ -21,12 +21,16 @@ const AuthForm = (props) => {
     setIsLoading(true);
 
     //some validation here
-    console.log("submit handler");
+    let url = "";
+
     if (isLogin) {
-        fetch("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCsOOjEv1P6zoHk-aBaQJld9HiBYOq4mWo", )
+        url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCsOOjEv1P6zoHk-aBaQJld9HiBYOq4mWo";
     } else {
-      fetch(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCsOOjEv1P6zoHk-aBaQJld9HiBYOq4mWo",
+        url = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCsOOjEv1P6zoHk-aBaQJld9HiBYOq4mWo";
+    }
+
+    fetch(
+        url,
         {
           method: "POST",
           body: JSON.stringify({
@@ -42,17 +46,22 @@ const AuthForm = (props) => {
         setIsLoading(false);
 
         if (res.status) {
+            return res.json();
         } else {
           return res.json().then((data) => {
             let errorMessage = "Autentification fail";
             // if(data && data.error && data.error.message) {
             //     errorMessage = data.error.message;
             // }
-            alert(errorMessage);
+            
+            throw new Error(errorMessage);
           });
         }
+      }).then(data => {
+          console.log(data);
+      }).catch(error => {
+        alert(error.message);
       });
-    }
   };
 
   return (
