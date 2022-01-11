@@ -1,4 +1,5 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useContext } from "react";
+import AuthContext from "./components/store/auth-context";
 import { Switch, Route, Redirect } from "react-router-dom";
 import "./App.css";
 
@@ -8,6 +9,7 @@ import UserProfilePage from "./pages/UserProfilePage";
 import AuthPage from "./pages/AuthPage";
 
 function App() {
+  const authCtx = useContext(AuthContext);
   return (
     <Fragment>
       <Header />
@@ -15,11 +17,17 @@ function App() {
         <Route path="/" exact>
           <HomePage />
         </Route>
-        <Route path="/auth">
-          <AuthPage />
-        </Route>
+        {!authCtx.isLogin && (
+          <Route path="/auth">
+            <AuthPage />
+          </Route>
+        )}
         <Route path="/profile">
-          <UserProfilePage />
+          {authCtx.isLogin && <UserProfilePage />}
+          {!authCtx.isLogin && <Redirect to="/auth" />}
+        </Route>
+        <Route path="*">
+          <Redirect to="/" />
         </Route>
       </Switch>
     </Fragment>
