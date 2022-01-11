@@ -21,20 +21,32 @@
     font-weight: 800;
 }
 
-.links a:last-child {
+/* .links a:last-child {
     border: 1px solid white;
     padding: 0.5rem 2rem;
     border-radius: 7px;
-}
+} */
 
 .links a:hover {
     color: black;
     transition: 0.5s ease;
 }
 
-.links a:last-child:hover {
+.logoutBtn {
+    color: white;
+    background-color: #350b58;
+    cursor: pointer;
+    text-decoration: none;
+    padding: 0 1rem;
+    font-weight: 800;
+    border: 1px solid white;
+    padding: 0.5rem 2rem;
+    border-radius: 7px;
+}
+
+
+.logoutBtn:hover {
     color:black;
     background-color: #fff;
     transition: 0.5s ease;
 }
-
